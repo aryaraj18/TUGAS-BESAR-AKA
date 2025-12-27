@@ -39,12 +39,6 @@ function runCombination() {
     return;
   }
 
-  const totalInput = items.reduce((s, i) => s + i.price, 0);
-  if (totalInput > budget) {
-    out.innerHTML = "<div class='danger'>Melebihi batas anggaran</div>";
-    return;
-  }
-
   const results = [];
   const n = items.length;
 
@@ -89,12 +83,6 @@ function runAnalysis() {
 
   if (items.length === 0) {
     out.innerHTML = "<div class='danger'>Input menu tidak valid</div>";
-    return;
-  }
-
-  const totalInput = items.reduce((s, i) => s + i.price, 0);
-  if (totalInput > budget) {
-    out.innerHTML = "<div class='danger'>Melebihi batas anggaran</div>";
     return;
   }
 
