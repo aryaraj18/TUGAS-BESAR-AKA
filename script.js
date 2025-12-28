@@ -148,10 +148,16 @@ function recursive(items) {
 function renderChart(labels, iterData, recData) {
   const canvas = document.getElementById("chart");
 
-  // tampilkan canvas SEKALI
+  // tampilkan canvas
   canvas.style.display = "block";
 
   const ctx = canvas.getContext("2d");
+
+  // pastikan chart lama dihancurkan
+  if (chart) {
+    chart.destroy();
+    chart = null;
+  }
 
   chart = new Chart(ctx, {
     type: "line",
@@ -189,31 +195,30 @@ function renderChart(labels, iterData, recData) {
       ]
     },
     options: {
-      responsive: true,          
+      responsive: true,
       maintainAspectRatio: true,
       aspectRatio: 2.2,
       animation: {
-        duration: 1000,
-        easing: 'easeInOutQuart'
-      },
-      layout: {
-        padding: {
-          left: 5,
-          right: 15,
-          top: 10,
-          bottom: 10
-        }
+        duration: 800,
+        easing: "easeInOutQuart"
       },
       plugins: {
         legend: {
           labels: {
             font: {
               size: 14,
-              weight: 'bold'
+              weight: "bold"
             },
             padding: 15,
-            color: '#4a5568',
+            color: "#4a5568",
             boxWidth: 20
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return `${context.dataset.label}: ${context.parsed.y.toFixed(6)} ms`;
+            }
           }
         }
       },
@@ -221,25 +226,28 @@ function renderChart(labels, iterData, recData) {
         y: {
           beginAtZero: true,
           grid: {
-            color: 'rgba(0, 0, 0, 0.05)'
+            color: "rgba(0, 0, 0, 0.05)"
           },
           ticks: {
+            callback: function (value) {
+              return value.toFixed(6);
+            },
             font: {
               size: 11
             },
-            color: '#4a5568',
+            color: "#4a5568",
             padding: 8
           }
         },
         x: {
           grid: {
-            color: 'rgba(0, 0, 0, 0.05)'
+            color: "rgba(0, 0, 0, 0.05)"
           },
           ticks: {
             font: {
               size: 11
             },
-            color: '#4a5568',
+            color: "#4a5568",
             padding: 8
           }
         }
